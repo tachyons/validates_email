@@ -3,5 +3,5 @@ class User
 
   attr_accessor :email_address
 
-  validates :email_address, email: true
+  validates :email_address, :email => true
 end

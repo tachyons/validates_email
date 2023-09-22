@@ -3,5 +3,5 @@ class UserWithNil
 
   attr_accessor :email_address
 
-  validates :email_address, email: {allow_nil: true}
+  validates :email_address, :email => {:allow_nil => true}
 end

@@ -1,13 +1,14 @@
-# frozen_string_literal: true
+require 'spec_helper'
 
-require "spec_helper"
+describe "Email validation" do
 
-RSpec.describe "Email validation" do
   before(:all) do
-    ActiveRecord::Schema.define(version: 1) do
-      create_table :users, force: true do |t|
+    ActiveRecord::Schema.define(:version => 1) do
+
+      create_table :users, :force => true do |t|
         t.column :email_address, :string
       end
+
     end
   end
 
@@ -22,48 +23,43 @@ RSpec.describe "Email validation" do
 
     it "should not allow nil as email" do
       @user.email_address = nil
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should not allow blank as email" do
       @user.email_address = ""
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should not allow an email without domain extension" do
       @user.email_address = "user@example"
-
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should not allow an email without @" do
       @user.email_address = "user"
-
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should not allow an email without prefix" do
       @user.email_address = "@example.com"
-
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should not allow an email without domain" do
       @user.email_address = "user@.com"
-
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should accept a valid email address" do
       @user.email_address = "user@example.com"
-
-      expect(@user).to be_valid
+      @user.should be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is not a valid email address"])
+      @user.errors[:email_address].should == ["is not a valid email address"]
     end
   end
 
@@ -74,23 +70,23 @@ RSpec.describe "Email validation" do
 
     it "should allow nil as email" do
       @user.email_address = nil
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should not allow blank as email" do
       @user.email_address = ""
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
 
     it "should allow a valid email address" do
       @user.email_address = "user@example.com"
-      expect(@user).to be_valid
+      @user.should be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is not a valid email address"])
+      @user.errors[:email_address].should == ["is not a valid email address"]
     end
   end
 
@@ -101,23 +97,23 @@ RSpec.describe "Email validation" do
 
     it "should allow nil as email" do
       @user.email_address = nil
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should allow blank as email" do
       @user.email_address = ""
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should allow a valid email address" do
       @user.email_address = "user@example.com"
-      expect(@user).to be_valid
+      @user.should be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is not a valid email address"])
+      @user.errors[:email_address].should == ["is not a valid email address"]
     end
   end
 
@@ -128,28 +124,28 @@ RSpec.describe "Email validation" do
 
     it "should allow nil as email" do
       @user.email_address = nil
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should allow blank as email" do
       @user.email_address = ""
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should allow a valid email address" do
       @user.email_address = "user@example.com"
-      expect(@user).to be_valid
+      @user.should be_valid
     end
 
     it "should not allow invalid email" do
       @user.email_address = "random"
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is just wrong!"])
+      @user.errors[:email_address].should == ["is just wrong!"]
     end
   end
 
@@ -160,13 +156,13 @@ RSpec.describe "Email validation" do
 
     it "should not allow invalid email" do
       @user.email_address = ""
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is not right"])
+      @user.errors[:email_address].should == ["is not right"]
     end
   end
 
@@ -177,13 +173,14 @@ RSpec.describe "Email validation" do
 
     it "should not allow invalid email" do
       @user.email_address = ""
-      expect(@user).not_to be_valid
+      @user.should_not be_valid
     end
-
+    
     it "should return an error message" do
       @user.email_address = "bad"
       @user.valid?
-      expect(@user.errors[:email_address]).to be_eql(["is not a valid email address"])
+      @user.errors[:email_address].should == ["is not a valid email address"]
     end
   end
+
 end
